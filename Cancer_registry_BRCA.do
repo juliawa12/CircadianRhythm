@@ -121,10 +121,6 @@ tab anycancer_10 //  anycancer_10 |      Freq.     Percent        Cum.
 -----------------------------------+-----------------------------------
                              Total |    502,415      100.00
 
-	
-**2. indicator variable for any malignant cancer
-gen anycancer=0
-replace anycancer=1 if anycancer_10==1 | anycancer_10==2 anycancer_9==1 anycancer_9==2
 
 save "Cancer_registry.dta", replace
 
@@ -153,8 +149,7 @@ save "Cancer_registry_BC_firstdate.dta"
 use "K:\MSc Placements\2021\JuliaW\Paper_CR\analyses\Cancer_registry.dta"
 // same as for BC dates
 drop BC9 BC10 cancer_10_12 cancer_10_14 // not needed. 
-// reshape to long. Need to recreate anycancer vars
-drop anycancer_10 anycancer_9 
+// reshape to long. Need to create anycancer variables
 gen anycancer_10=0
 replace anycancer_10=1 if substr(cancer_10_, 1, 3) >= "D00" & substr(cancer_10_, 1, 3) <= "D09" // in situ
 replace anycancer_10=1 if substr(cancer_10_, 1, 1) == "C" & substr(cancer_10_, 1, 3) != "C44" // malignant exc NMskin
